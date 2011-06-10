@@ -2,7 +2,6 @@ module RailsJavaScriptHelpers
   # arg:: Object
   # Does a simple transition on types from Ruby to Javascript.
   def format_type_to_js(arg)
-  puts '&' * 400
     case arg
       when Array
         "[#{arg.map{|value| format_type_to_js(value)}.join(',')}]"
