@@ -1,0 +1,5 @@
+== 1.1
+  * Remove escaping from function values
+  * Port #escape_javascript from Rails to make more consistent
+== 1.0
+  * Initial release
