@@ -1,4 +1,7 @@
 module RailsJavaScriptHelpers
+
+  JS_ESCAPE_MAP = {"\""=>"\\\"", "\r"=>"\\n", "\\"=>"\\\\", "'"=>"\\'", "\r\n"=>"\\n", "</"=>"<\\/", "\n"=>"\\n"}
+
   # arg:: Object
   # Does a simple transition on types from Ruby to Javascript.
   def format_type_to_js(arg)
@@ -19,7 +22,7 @@ module RailsJavaScriptHelpers
       when NilClass
         'null'
       else
-        arg.to_s =~ %r{^\s*function\s*\(} ? "'#{escape_javascript(arg.to_s)}'" : "'#{escape_javascript(arg.to_s)}'"
+        arg.to_s =~ %r{^\s*function\s*\(} ? arg.to_s : "'#{custom_escape_javascript(arg.to_s)}'"
     end
   end
 
@@ -30,5 +33,16 @@ module RailsJavaScriptHelpers
   # (Basically compat mode with prototype style)
   def format_id(id)
     id.to_s[0,1] =~ /[A-Za-z0-9]/ ? "##{id}" : id
+  end
+
+  private
+
+  # Pulled from rails to keep consistency
+  def custom_escape_javascript(javascript)
+    if javascript
+      javascript.gsub(/(\\|<\/|\r\n|[\n\r"'])/) {|part| JS_ESCAPE_MAP[part]}
+    else
+      ''
+    end
   end
 end
