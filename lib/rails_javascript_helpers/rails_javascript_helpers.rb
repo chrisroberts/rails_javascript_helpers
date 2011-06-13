@@ -1,10 +1,11 @@
-module RailsJavaScriptHelpers
+require 'action_view/helpers/javascript_helper'
 
-  JS_ESCAPE_MAP = {"\""=>"\\\"", "\r"=>"\\n", "\\"=>"\\\\", "'"=>"\\'", "\r\n"=>"\\n", "</"=>"<\\/", "\n"=>"\\n"}
+module RailsJavaScriptHelpers
 
   # arg:: Object
   # Does a simple transition on types from Ruby to Javascript.
   def format_type_to_js(arg)
+    @klass ||= Class.new.extend(ActionView::Helpers::JavaScriptHelper)
     case arg
       when Array
         "[#{arg.map{|value| format_type_to_js(value)}.join(',')}]"
@@ -22,7 +23,7 @@ module RailsJavaScriptHelpers
       when NilClass
         'null'
       else
-        arg.to_s =~ %r{^\s*function\s*\(} ? arg.to_s : "'#{custom_escape_javascript(arg.to_s)}'"
+        arg.to_s =~ %r{^\s*function\s*\(} ? arg.to_s : "'#{escape_javascript(arg.to_s)}'"
     end
   end
 
@@ -35,14 +36,4 @@ module RailsJavaScriptHelpers
     id.to_s[0,1] =~ /[A-Za-z0-9]/ ? "##{id}" : id
   end
 
-  private
-
-  # Pulled from rails to keep consistency
-  def custom_escape_javascript(javascript)
-    if javascript
-      javascript.gsub(/(\\|<\/|\r\n|[\n\r"'])/) {|part| JS_ESCAPE_MAP[part]}
-    else
-      ''
-    end
-  end
 end
