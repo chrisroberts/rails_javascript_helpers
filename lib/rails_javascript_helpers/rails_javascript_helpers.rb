@@ -1,4 +1,3 @@
-require 'action_view/helpers/javascript_helper'
 
 module RailsJavaScriptHelpers
 
@@ -22,6 +21,8 @@ module RailsJavaScriptHelpers
         arg.to_s
       when NilClass
         'null'
+      when RawJS
+        arg.to_s
       else
         arg.to_s.gsub(/\s+/, ' ') =~ %r{^\s*function\s*\(} ? arg.to_s : "'#{escape_javascript(arg.to_s)}'"
     end
@@ -36,4 +37,13 @@ module RailsJavaScriptHelpers
     id.to_s[0,1] =~ /[A-Za-z0-9]/ ? "##{id}" : id
   end
 
+end
+
+class RawJS
+  def initialize(s)
+    @s = s
+  end
+  def to_s
+    @s
+  end
 end
