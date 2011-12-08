@@ -1,3 +1,5 @@
+== 1.5
+  * Use Numeric in place of Fixnum to allow proper functionality of floats
 == 1.4
   * Add RawJS type
 == 1.3
