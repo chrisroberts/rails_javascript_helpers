@@ -1,3 +1,5 @@
+== 1.5.1
+* Include the rails javascript helper
 == 1.5
   * Use Numeric in place of Fixnum to allow proper functionality of floats
 == 1.4

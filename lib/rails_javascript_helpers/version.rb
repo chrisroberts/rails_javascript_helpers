@@ -13,5 +13,5 @@ module RailsJavaScriptHelpers
     end
   end
 
-  VERSION = Version.new('1.5.0')
+  VERSION = Version.new('1.5.1')
 end
