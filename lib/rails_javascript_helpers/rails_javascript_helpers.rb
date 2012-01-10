@@ -1,10 +1,10 @@
-
 module RailsJavaScriptHelpers
+
+  include ActionView::Helpers::JavaScriptHelper
 
   # arg:: Object
   # Does a simple transition on types from Ruby to Javascript.
   def format_type_to_js(arg)
-    @klass ||= Class.new.extend(ActionView::Helpers::JavaScriptHelper)
     case arg
       when Array
         "[#{arg.map{|value| format_type_to_js(value)}.join(',')}]"
