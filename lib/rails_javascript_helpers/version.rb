@@ -1,17 +1,7 @@
 module RailsJavaScriptHelpers
-  class Version
-
-    attr_reader :major, :minor, :tiny
-
-    def initialize(version)
-      version = version.split('.')
-      @major, @minor, @tiny = [version[0].to_i, version[1].to_i, version[2].to_i]
-    end
-
-    def to_s
-      "#{@major}.#{@minor}.#{@tiny}"
-    end
+  # Version wrapper class
+  class Version < Gem::Version
   end
-
-  VERSION = Version.new('1.5.1')
+  # Current library version
+  VERSION = Version.new('1.6.0')
 end
